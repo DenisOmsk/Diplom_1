@@ -3,19 +3,42 @@ package praktikum;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
+
 
 class BurgerTest {
 
-    Ingredient ingredient1 = new Ingredient(IngredientType.SAUCE, "sour cream", 20); // Первый ингредиент
-    Ingredient ingredient2 = new Ingredient(IngredientType.FILLING, "cutlet", 200);  // Второй ингредиент
-    Ingredient ingredient3 = new Ingredient(IngredientType.SAUCE, "chili sauce", 300); // Третий ингредиент
-    Burger burger; // Объект тестируемого бургера
+    @Mock
+    Ingredient ingredient1;
+    @Mock
+    Ingredient ingredient2;
+    @Mock
+    Ingredient ingredient3;
+
+    Burger burger;
 
     @BeforeEach
     void setUp() {
-        burger = new Burger(); // Инициализация нового бургера перед каждым тестом
+        MockitoAnnotations.openMocks(this);
+
+        // Настройка моков ингредиентов
+        when(ingredient1.getType()).thenReturn(IngredientType.SAUCE);
+        when(ingredient1.getName()).thenReturn("sour cream");
+        when(ingredient1.getPrice()).thenReturn(20f);
+
+        when(ingredient2.getType()).thenReturn(IngredientType.FILLING);
+        when(ingredient2.getName()).thenReturn("cutlet");
+        when(ingredient2.getPrice()).thenReturn(200f);
+
+        when(ingredient3.getType()).thenReturn(IngredientType.SAUCE);
+        when(ingredient3.getName()).thenReturn("chili sauce");
+        when(ingredient3.getPrice()).thenReturn(300f);
+
+        burger = new Burger();
     }
 
     @Test
